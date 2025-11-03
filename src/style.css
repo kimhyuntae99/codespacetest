@@ -39,6 +39,48 @@ body {
   background-attachment: fixed;
 }
 
+/* Animated soft gradient layer for subtle motion */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(600px 300px at 15% 20%, rgba(85,120,255,0.12), transparent 10%),
+              radial-gradient(500px 250px at 80% 80%, rgba(30,200,255,0.08), transparent 12%);
+  filter: blur(60px) saturate(120%);
+  transform: translate3d(0,0,0);
+  will-change: transform, opacity;
+  animation: bg-drift 28s linear infinite alternate;
+  opacity: 0.95;
+}
+
+@keyframes bg-drift {
+  0% { transform: translate3d(-6%, -3%, 0) scale(1); }
+  25% { transform: translate3d(4%, -2%, 0) scale(1.02); }
+  50% { transform: translate3d(6%, 3%, 0) scale(1.03); }
+  75% { transform: translate3d(-4%, 4%, 0) scale(1.01); }
+  100% { transform: translate3d(-6%, -3%, 0) scale(1); }
+}
+
+/* secondary ultra-slow tint shift to keep it lively but subtle */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  background: linear-gradient(90deg, rgba(16,40,90,0.02), rgba(16,80,140,0.02));
+  mix-blend-mode: screen;
+  animation: hue-shift 60s linear infinite;
+}
+
+@keyframes hue-shift {
+  0% { filter: hue-rotate(0deg) saturate(100%); }
+  50% { filter: hue-rotate(20deg) saturate(110%); }
+  100% { filter: hue-rotate(0deg) saturate(100%); }
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
